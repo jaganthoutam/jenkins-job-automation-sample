@@ -1,5 +1,5 @@
 String basePath = 'springboot-api-demo'
-String repository = 'anuprasanna/springboot-api-demo'
+String gitRepository = 'anuprasanna/springboot-api-demo'
 String buildBranch = '*/master'
 String projectName = 'BuildProject'
 String projectDisplayName = 'Springboot API Sample'
@@ -15,7 +15,7 @@ String HTTPS = 'https'
 
 String nexusOSSURI = 'localhost:8081'
 String nexusOSSVersion = 'nexus3'
-String nexusOSSRepositoryName = 'SpringBootRestApiExample'
+String nexusOSSRepositoryName = 'SpringBootRestApiProject'
 String nexusCredentialsID = 'NexusRepoCredentials'
 
 folder(basePath) {
@@ -25,12 +25,12 @@ folder(basePath) {
 
 // job definition
 mavenJob(basePath + '/' + projectName) {
-    description('build the project: ' + repository)
+    description('build the project: ' + gitRepository)
     scm {
         git {
             branch(buildBranch)
             remote {
-                github (repository, HTTPS, 'github.com')
+                github (gitRepository, HTTPS, 'github.com')
                 credentials(credentialIDGithub)
             }
         }
