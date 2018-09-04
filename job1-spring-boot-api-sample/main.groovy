@@ -1,26 +1,67 @@
 String basePath = 'springboot-api-demo'
-String repo = 'anuprasanna/springboot-api-demo'
+String repository = 'anuprasanna/springboot-api-demo'
 String buildBranch = '*/master'
+String projectName = 'BuildProject'
+String projectDisplayName = 'Springboot API Sample'
+String projectDescription = 'This example shows basic folder/job creation'
+String credentialIDGithub = 'github-anuprasanna'
+
+String artifactGroupID = 'org.spring.boot.sample'
+String artifactID = 'SpringBootRestApiExample'
+
+String STATUS_SUCCESS = 'SUCCESS'
+String HTTP = 'http'
+String HTTPS = 'https'
+
+String nexusOSSURI = 'localhost:8081'
+String nexusOSSVersion = 'nexus3'
+String nexusOSSRepositoryName = 'SpringBootRestApiExample'
+String nexusCredentialsID = 'NexusRepoCredentials'
 
 folder(basePath) {
-    displayName('Springboot API Sample')
-    description 'This example shows basic folder/job creation.'
+    displayName(projectDisplayName)
+    description(projectDescription)
 }
 
 // job definition
-job(basePath + '/Build') {
+mavenJob(basePath + '/' + projectName) {
+    description('build the project: ' + repository)
     scm {
-      github (repo, buildBranch, 'https', 'github.com')
+        git {
+            branch(buildBranch)
+            remote {
+                github (repository, HTTPS, 'github.com')
+                credentials(credentialIDGithub)
+            }
+        }
     }
-    steps {
-      	maven {
-            goals('clean')
-            goals('install')
-            mavenOpts('-Xms256m')
-            mavenOpts('-Xmx512m')
-            properties(skipTests: true)
-            mavenInstallation('Maven3')
-            providedSettings('central-mirror')
+    triggers {
+        scm('@daily')
+    }
+    wrappers {
+        goals('clean install')
+        timeout {
+            likelyStuck()
+            failBuild()
+        }
+        testInProgressBuildWrapper()
+    }
+    postBuildSteps(STATUS_SUCCESS) {
+        shell("echo 'Maven build completed !'")
+        nexusArtifactUploader {
+            nexusVersion(nexusOSSVersion)
+            protocol(HTTP)
+            nexusUrl(nexusOSSURI)
+            groupId(artifactGroupID)
+            version('${POM_VERSION}')
+            repository(nexusOSSRepositoryName)
+            credentialsId(nexusCredentialsID)
+            artifact {
+                artifactId(artifactID)
+                type('jar')
+                classifier('')
+                file('target/' + artifactID + '-${POM_VERSION}.jar')
+            }
         }
     }
 }
