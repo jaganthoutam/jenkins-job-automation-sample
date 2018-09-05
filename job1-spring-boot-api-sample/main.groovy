@@ -1,3 +1,6 @@
+// Jenkins Job DSL definition file for generating a Job for 
+// https://github.com/anuprasanna/springboot-api-demo
+
 String basePath = 'springboot-api-demo'
 String gitRepository = 'anuprasanna/springboot-api-demo'
 String buildBranch = '*/master'
@@ -9,15 +12,16 @@ String credentialIDGithub = 'github-anuprasanna'
 String artifactGroupID = 'org.spring.boot.sample'
 String artifactID = 'SpringBootRestApiExample'
 
-String STATUS_SUCCESS = 'SUCCESS'
-String HTTP = 'http'
-String HTTPS = 'https'
+final String STATUS_SUCCESS = 'SUCCESS'
+final String HTTP = 'http'
+final String HTTPS = 'https'
 
 String nexusOSSURI = 'localhost:8081'
 String nexusOSSVersion = 'nexus3'
 String nexusOSSRepositoryName = 'SpringBootRestApiProject'
 String nexusCredentialsID = 'NexusRepoCredentials'
 
+// root folder creation
 folder(basePath) {
     displayName(projectDisplayName)
     description(projectDescription)
@@ -25,7 +29,7 @@ folder(basePath) {
 
 // job definition
 mavenJob(basePath + '/' + projectName) {
-    description('build the project: ' + gitRepository)
+    description('Build the Java roject: ' + gitRepository)
     scm {
         git {
             branch(buildBranch)
@@ -48,6 +52,7 @@ mavenJob(basePath + '/' + projectName) {
     }
     postBuildSteps(STATUS_SUCCESS) {
         shell("echo 'Maven build completed !'")
+        // upload the generated artifact to Nexus OSS repo
         nexusArtifactUploader {
             nexusVersion(nexusOSSVersion)
             protocol(HTTP)
