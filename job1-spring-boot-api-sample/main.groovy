@@ -68,5 +68,6 @@ mavenJob(basePath + '/' + projectName) {
                 file('target/' + artifactID + '-${POM_VERSION}.jar')
             }
         }
+        shell("echo 'Upload done !'")
     }
 }
