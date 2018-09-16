@@ -1,13 +1,13 @@
 // Jenkins Job DSL definition file for generating a Job for 
-// https://github.com/anuprasanna/springboot-api-demo
+// https://github.com/anuradhaneo/springboot-api-demo
 
 String basePath = 'springboot-api-demo'
-String gitRepository = 'anuprasanna/springboot-api-demo'
+String gitRepository = 'anuradhaneo/springboot-api-demo'
 String buildBranch = '*/master'
-String projectName = 'BuildProject'
+String projectName = 'Build Project'
 String projectDisplayName = 'Springboot API Sample'
 String projectDescription = 'This example shows basic folder/job creation'
-String credentialIDGithub = 'github-anuprasanna'
+String credentialIDGithub = 'github-anuradhaneo'
 
 String artifactGroupID = 'org.spring.boot.sample'
 String artifactID = 'SpringBootRestApiExample'
