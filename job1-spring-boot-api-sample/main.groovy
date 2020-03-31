@@ -16,7 +16,7 @@ final String STATUS_SUCCESS = 'SUCCESS'
 final String HTTP = 'http'
 final String HTTPS = 'https'
 
-String nexusOSSURI = 'nexus:8081'
+String nexusOSSURI = 'nexus:8081/nexus'
 String nexusOSSVersion = 'nexus3'
 String nexusOSSRepositoryName = 'SpringBootRestApiProject'
 String nexusCredentialsID = 'adopnexus'
