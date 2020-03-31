@@ -16,10 +16,10 @@ final String STATUS_SUCCESS = 'SUCCESS'
 final String HTTP = 'http'
 final String HTTPS = 'https'
 
-String nexusOSSURI = 'localhost:8081'
+String nexusOSSURI = 'nexus:8081'
 String nexusOSSVersion = 'nexus3'
 String nexusOSSRepositoryName = 'SpringBootRestApiProject'
-String nexusCredentialsID = 'NexusRepoCredentials'
+String nexusCredentialsID = 'adopnexus'
 
 // root folder creation
 folder(basePath) {
